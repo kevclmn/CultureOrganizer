@@ -13,7 +13,24 @@ cursor=mydb.cursor()
 index=int(input("Tiene cuenta?\n1 -Si\n2 -No\nInput(1 - 2): "))
 
 if index==1:        #login
+  while True:
     username=input("Ingrese su nombre de usuario: ")
+    if vf.char_verify("username",username) == True and vf.verify("username",username)==False:
+      break
+    if vf.verify("username",username):
+      print("Usuario no encontrado")
+  while True:
+    password=input("Ingrese su contraseña: ")
+    cursor.execute(
+        f"SELECT password FROM users WHERE username='{username}'"
+        )
+    password2=cursor.fetchone()[0]
+    if password==password2:
+      print("Contraseña correcta")
+      break
+    else:
+      print("Contraseña incorrecta, intentelo de nuevo")
+
   
 if index==2:        #registro
   # Comprueba validez
@@ -21,6 +38,9 @@ if index==2:        #registro
     username=input("Ingrese su nombre de usuario: ")
     if vf.char_verify("username",username) and vf.verify("username",username):
         break
+    else:
+      print("El nombre de usuario ya está en uso, ingrese uno nuevo")
+
   
   while True:
     mail=input("Ingrese su correo electronico: ")

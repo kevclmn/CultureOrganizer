@@ -19,8 +19,7 @@ def verify(column,parameter):
   if cursor.fetchone()[0]==0:
      return True
   else:
-     print(f"El {column} ya está en uso, ingese uno nuevo")
-     return False
+    return False
 
 
 # Verificacion de caracteres 
