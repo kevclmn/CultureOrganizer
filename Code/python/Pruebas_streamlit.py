@@ -1,9 +1,6 @@
-# Registro / Login de usuarios
-import mysql.connector
 import streamlit as st
-import verification as vf
 
-# CSS puro - REVISAR MIGRACION PARA LIMPIAR CODIGO
+# CSS puro - SOLO ESTILOS
 st.markdown(
     """
     <style>
@@ -105,17 +102,8 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-
-mydb = mysql.connector.connect(
-  host="localhost",
-  user="root",
-  password="102104",
-  database="culture_organizer",
-)
-cursor=mydb.cursor()
-signup_page = st.Page("signup.py", title="Sign Up")
-
-st.markdown(        #HTML Estático
+# HTML estático para estructura - SIN INTERACTIVIDAD
+st.markdown(
     """
     <h1 class="login-title">CULTURE ORGANIZER</h1>
     <p class="login-subtitle">Ingresa tus credenciales para continuar</p>
@@ -124,6 +112,7 @@ st.markdown(        #HTML Estático
     unsafe_allow_html=True
 )
 
+# Widgets NATIVOS de Streamlit (seguros)
 with st.form("login_form"):
     username = st.text_input(
         "👤 Usuario",
@@ -138,22 +127,12 @@ with st.form("login_form"):
     )
     
     if st.form_submit_button("🚀 Iniciar Sesión"):
-      if vf.char_verify("username",username) == True and vf.verify("username",username)==False:        
-        cursor.execute(
-                f"SELECT password FROM users WHERE username='{username}'"
-                )
-        password2=cursor.fetchone()[0]
-        if password==password2:
-          st.success("✅ ¡Login exitoso!")
-          ### AÑADIR PASO A LA PAGINA PRINCIPAL
+        if username == "admin@ejemplo.com" and password == "123456":
+            st.success("✅ ¡Login exitoso!")
         else:
-          st.error("Contraseña incorrecta, intentelo de nuevo")   
-      else:
-        st.error("Usuario no encontrado")
+            st.error("❌ Credenciales incorrectas")
 
-#st.switch_page("/pages/signup.py")
 # HTML estático para el footer
-
 st.markdown(
     """
     <hr class="divider">
@@ -163,8 +142,9 @@ st.markdown(
         <a href="#">Crear cuenta</a>
     </div>
     <p style="text-align: center; color: #bdc3c7; font-size: 12px; margin-top: 20px;">
-        © 2026 Culture Organizer.
+        © 2026 Culture Organizer. Todos los derechos reservados.
     </p>
     """,
     unsafe_allow_html=True
 )
+

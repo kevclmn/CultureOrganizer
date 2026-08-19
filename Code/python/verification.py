@@ -1,4 +1,5 @@
 import mysql.connector
+import streamlit as st
 
 mydb = mysql.connector.connect(
   host="localhost",
@@ -34,19 +35,19 @@ def char_verify(input_type ,user_input):
         dotcount=0
         for character in user_input:
           if character not in mailchar:
-            print("Caracteres invalidos")
+            st.error("Caracteres invalidos")
             return False 
           if "@" == character:      #REVISAR METODO DE FILTRADO XD
             acount=acount+1
           if "." == character:
             dotcount=dotcount+1
         if dotcount > 1 or acount > 1 or dotcount==0 or acount == 0:
-          print("Revisa los puntos y los arrobas")
+          st.error("Revisa los puntos y los arrobas")
           return False
         return True
     case "username":
             for character in user_input:
               if character not in userchar:
-                print("Caracteres invalidos")
+                st.error("Caracteres invalidos")
                 return False 
             return True
